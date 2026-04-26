@@ -114,10 +114,3 @@ Geplante oder mögliche Erweiterungen:
 * Code-Signing
 * Microsoft 365 Check als separates Modul
 * optionales Admin-Dashboard für Auswertungen
-
-## Lizenz
-
-Dieses Projekt steht unter der MIT License.
-
-```
-```
