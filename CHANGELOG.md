@@ -1,3 +1,9 @@
+# Änderungen Version 1.2.1
+
+- Syntaxfehler in der modernen Oberfläche behoben.
+- Mehrzeiliger Beschreibungstext im Scan-Card-Bereich korrekt escaped.
+- GitHub Actions Build sollte jetzt wieder sauber durchlaufen.
+
 # Änderungen Version 1.2.0
 
 - Moderne Oberfläche im IT-Solutions Branding ergänzt.

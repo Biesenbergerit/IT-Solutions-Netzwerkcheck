@@ -1,6 +1,6 @@
 """
 IT-Solutions Netzwerkcheck
-Version: 1.2.0
+Version: 1.2.1
 Autor: IT-Solutions / Lucas Biesenberger
 
 Zweck:
@@ -327,7 +327,7 @@ def scan_network(
 
     return {
         "scanner": "IT-Solutions Netzwerkcheck",
-        "version": "1.2.0",
+        "version": "1.2.1",
         "network": str(network.with_prefixlen),
         "started_at": started.isoformat(timespec="seconds"),
         "finished_at": finished.isoformat(timespec="seconds"),
@@ -832,8 +832,7 @@ class NetworkCheckApp:
 
         tk.Label(card, text="Lokalen Netzwerk-Sicherheitscheck starten", bg=self.colors["surface"], fg=self.colors["text"],
                  font=("Segoe UI", 14, "bold")).grid(row=0, column=1, sticky="w", pady=(20, 2))
-        tk.Label(card, text="Überprüfen Sie Ihr lokales Netzwerk auf erreichbare Geräte
-und Standarddienste, um Sicherheitsrisiken zu identifizieren.",
+        tk.Label(card, text="Überprüfen Sie Ihr lokales Netzwerk auf erreichbare Geräte\nund Standarddienste, um Sicherheitsrisiken zu identifizieren.",
                  bg=self.colors["surface"], fg="#475569", font=("Segoe UI", 10), justify="left").grid(row=1, column=1, sticky="nw", pady=(0, 18))
 
         controls = tk.Frame(card, bg=self.colors["surface"])
@@ -1104,9 +1103,7 @@ und Standarddienste, um Sicherheitsrisiken zu identifizieren.",
                 )
                 messagebox.showinfo(
                     "Scan abgeschlossen",
-                    f"Bericht erstellt:
-
-{html_path}"
+                    f"Bericht erstellt:\n\n{html_path}"
                 )
         except Exception as exc:
             def finish():
