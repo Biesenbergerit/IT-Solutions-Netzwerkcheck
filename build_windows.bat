@@ -81,7 +81,7 @@ if not %errorlevel%==0 (
 
 echo.
 echo Erstelle Windows EXE...
-%PYTHON_CMD% -m PyInstaller --onefile --windowed --clean --name IT-Solutions-Netzwerkcheck netzwerkcheck.py
+%PYTHON_CMD% -m PyInstaller --onefile --windowed --clean --name IT-Solutions-Netzwerkcheck --icon app_icon.ico netzwerkcheck.py
 if not %errorlevel%==0 (
     echo FEHLER: Build fehlgeschlagen.
     pause

@@ -1,3 +1,17 @@
+# Änderungen Version 1.2.5
+
+- Standard-Fenstericon durch das IT-Solutions Logo ersetzt.
+- `app_icon.ico` für PyInstaller ergänzt.
+- GitHub Actions und lokaler Build verwenden jetzt das Logo als EXE-Icon.
+- Tkinter-Fenster setzt das Logo auch in der Titelleiste.
+
+# Änderungen Version 1.2.4
+
+- Berichte werden nun im temporären Benutzerordner gespeichert.
+- Der Dokumente-Ordner wird nicht mehr automatisch mit Netzwerkcheck-Berichten gefüllt.
+- Der Bericht kann weiterhin direkt über den Button „HTML-Bericht öffnen“ geöffnet werden.
+- Der Ausgabeordner kann weiterhin über den Button geöffnet werden.
+
 # Änderungen Version 1.2.3
 
 - Sichtbare CMD-Fenster bei Ping- und ARP-Abfragen unter Windows unterdrückt.

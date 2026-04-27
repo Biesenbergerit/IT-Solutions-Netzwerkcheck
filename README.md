@@ -6,7 +6,7 @@ Das Tool wurde von Lucas Biesenberger IT-Solutions entwickelt und dient als erst
 
 ## Was das Tool macht
 
-Die Version 1.2.3 enthält eine modernisierte Oberfläche im IT-Solutions Branding mit Dashboard, Ergebnisliste und Risikoübersicht.
+Die Version 1.2.5 enthält eine modernisierte Oberfläche im IT-Solutions Branding mit Dashboard, Ergebnisliste und Risikoübersicht.
 
 
 - erkennt aktiv erreichbare bzw. lokal sichtbare Geräte im Netzwerk
@@ -53,6 +53,10 @@ https://github.com/Biesenbergerit/IT-Solutions-Netzwerkcheck/releases/latest
 ```
 
 Hinweis: Da es sich um ein neues Windows-Tool handelt, kann Windows SmartScreen beim ersten Start eine Sicherheitswarnung anzeigen. Der Quellcode ist öffentlich einsehbar.
+
+## Speicherort der Berichte
+
+Die erzeugten HTML- und JSON-Berichte werden im temporären Benutzerordner gespeichert. Sie können direkt über die Anwendung geöffnet werden und müssen nicht manuell aus dem Dokumente-Ordner gelöscht werden.
 
 ## Bedienung
 

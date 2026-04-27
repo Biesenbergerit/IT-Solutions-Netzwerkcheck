@@ -7,7 +7,9 @@
 3. Berechtigung bestätigen.
 4. Netzwerkbereich prüfen. Meistens wird dieser automatisch erkannt.
 5. Auf `Scan starten` klicken.
-6. Nach Abschluss wird ein HTML-Bericht erstellt.
+6. Nach Abschluss wird ein HTML-Bericht erstellt und kann direkt über die Anwendung geöffnet werden.
+
+Der Bericht wird im temporären Benutzerordner gespeichert und nicht dauerhaft im Dokumente-Ordner abgelegt.
 
 ## Hinweis zur Geräteanzahl
 
