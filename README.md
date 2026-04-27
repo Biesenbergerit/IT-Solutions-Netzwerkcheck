@@ -6,6 +6,9 @@ Das Tool wurde von Lucas Biesenberger IT-Solutions entwickelt und dient als erst
 
 ## Was das Tool macht
 
+Die Version 1.2.0 enthält eine modernisierte Oberfläche im IT-Solutions Branding mit Dashboard, Ergebnisliste und Risikoübersicht.
+
+
 - erkennt aktiv erreichbare bzw. lokal sichtbare Geräte im Netzwerk
 - prüft ausgewählte Standardports
 - erkennt offene Dienste wie HTTP, HTTPS, SMB, RDP, FTP, Telnet oder VNC

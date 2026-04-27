@@ -1,3 +1,13 @@
+# Änderungen Version 1.2.0
+
+- Moderne Oberfläche im IT-Solutions Branding ergänzt.
+- Logo in die Anwendung integriert.
+- Sidebar-Navigation, Scan-Dashboard und Ergebnisübersicht ergänzt.
+- KPI-Karten für Geräte, offene Dienste, kritische Risiken und Berichtstatus ergänzt.
+- Ergebnisliste direkt in der Oberfläche sichtbar.
+- Risikoübersicht direkt in der Oberfläche sichtbar.
+- Buttons zum Öffnen des HTML-Berichts und Ausgabeordners ergänzt.
+
 # Änderungen Version 1.1.0
 
 - ARP-Auswertung ergänzt.
