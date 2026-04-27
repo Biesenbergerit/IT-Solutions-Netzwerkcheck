@@ -18,7 +18,6 @@ set PYTHON_CMD=
 echo Suche echte Python Installation...
 echo.
 
-REM 1. Bevorzugt den Python Launcher verwenden, weil "python.exe" oft vom Microsoft Store Alias blockiert wird.
 where py >nul 2>nul
 if %errorlevel%==0 (
     py -3 --version >nul 2>nul
@@ -28,7 +27,6 @@ if %errorlevel%==0 (
     )
 )
 
-REM 2. Danach python pruefen, aber nur wenn es wirklich funktioniert.
 where python >nul 2>nul
 if %errorlevel%==0 (
     python --version >nul 2>nul
@@ -38,38 +36,10 @@ if %errorlevel%==0 (
     )
 )
 
-REM 3. Bekannte Standardpfade pruefen.
-for %%P in (
-    "%LocalAppData%\Programs\Python\Python312\python.exe"
-    "%LocalAppData%\Programs\Python\Python311\python.exe"
-    "%ProgramFiles%\Python312\python.exe"
-    "%ProgramFiles%\Python311\python.exe"
-) do (
-    if exist %%P (
-        %%P --version >nul 2>nul
-        if !errorlevel!==0 (
-            set PYTHON_CMD=%%P
-            goto python_found
-        )
-    )
-)
-
 echo FEHLER: Keine funktionierende Python Installation gefunden.
 echo.
-echo Sehr wahrscheinlich ist der Microsoft Store Alias aktiv oder Python ist nicht im PATH.
-echo.
-echo Loesung 1:
-echo Einstellungen ^> Apps ^> Erweiterte App-Einstellungen ^> App-Ausfuehrungsaliase
-echo Dort deaktivieren:
-echo python.exe
-echo python3.exe
-echo.
-echo Loesung 2:
-echo Python von python.org neu installieren und "Add python.exe to PATH" aktivieren.
-echo.
-echo Teste danach in einem neuen CMD-Fenster:
-echo py -3 --version
-echo python --version
+echo Der Kunde muss Python NICHT installieren.
+echo Python wird nur hier zum Erstellen der EXE benoetigt.
 echo.
 pause
 exit /b 1
@@ -125,8 +95,5 @@ echo ==========================================
 echo.
 echo Die fertige Kunden-Datei liegt hier:
 echo dist\IT-Solutions-Netzwerkcheck.exe
-echo.
-echo Diese EXE kannst du auf deine Website stellen.
-echo Der Kunde braucht KEIN Python.
 echo.
 pause

@@ -1,18 +1,20 @@
-````markdown
 # IT-Solutions Netzwerkcheck
 
-Der IT-Solutions Netzwerkcheck ist ein lokales Open-Source-Tool für Windows zur einfachen Überprüfung erreichbarer Geräte und offener Standarddienste im eigenen Netzwerk.
+Der IT-Solutions Netzwerkcheck ist ein lokales Open-Source-Tool für Windows zur einfachen Überprüfung aktiv sichtbarer Geräte und offener Standarddienste im eigenen Netzwerk.
 
 Das Tool wurde von Lucas Biesenberger IT-Solutions entwickelt und dient als erste Orientierung für grundlegende Netzwerk- und Sicherheitsrisiken.
 
 ## Was das Tool macht
 
-- erkennt erreichbare Geräte im lokalen Netzwerk
+- erkennt aktiv erreichbare bzw. lokal sichtbare Geräte im Netzwerk
 - prüft ausgewählte Standardports
 - erkennt offene Dienste wie HTTP, HTTPS, SMB, RDP, FTP, Telnet oder VNC
+- liest zusätzlich die lokale ARP-Tabelle aus
+- zeigt MAC-Adressen an, sofern lokal verfügbar
 - bewertet gefundene Hinweise grob nach niedrig, mittel und hoch
 - erzeugt einen verständlichen HTML-Bericht
 - erzeugt zusätzlich einen JSON-Bericht zur technischen Auswertung
+- weist darauf hin, wenn Hostnamen und offene Dienste unplausibel wirken können
 
 ## Was das Tool nicht macht
 
@@ -22,6 +24,16 @@ Das Tool wurde von Lucas Biesenberger IT-Solutions entwickelt und dient als erst
 - keine Umgehung von Schutzmaßnahmen
 - keine Änderungen an Geräten oder Einstellungen
 - keine Installation von Hintergrunddiensten
+- keine vollständige Inventarisierung aller Geräte
+- keine Schwachstellenprüfung nach CVE-Datenbank
+
+## Wichtiger Hinweis zur Geräteerkennung
+
+Der Netzwerkcheck zeigt aktiv sichtbare Geräte zum Zeitpunkt des Scans.
+
+Die Anzahl kann von der Geräteliste eines Routers abweichen, da Router oft auch alte, offline befindliche oder schlafende Geräte anzeigen. Manche Geräte blockieren Ping, haben keine offenen Standarddienste oder befinden sich in einem anderen Netz, Gastnetz oder VLAN.
+
+Hostnamen können aus Router- oder DNS-Caches stammen und sind nicht immer eindeutig. Deshalb sollten auffällige Ergebnisse bei Bedarf manuell mit Router, Geräteliste oder Inventar abgeglichen werden.
 
 ## Rechtlicher Hinweis
 
@@ -35,7 +47,7 @@ Die aktuelle Windows-Version kann über die GitHub Releases heruntergeladen werd
 
 ```text
 https://github.com/Biesenbergerit/IT-Solutions-Netzwerkcheck/releases/latest
-````
+```
 
 Hinweis: Da es sich um ein neues Windows-Tool handelt, kann Windows SmartScreen beim ersten Start eine Sicherheitswarnung anzeigen. Der Quellcode ist öffentlich einsehbar.
 
@@ -95,12 +107,12 @@ Nach einem erfolgreichen Build kann das erzeugte Artefakt heruntergeladen und al
 
 Der Netzwerkcheck eignet sich als erste technische Orientierung für:
 
-* kleine Unternehmen
-* Handwerksbetriebe
-* Arztpraxen
-* Kanzleien
-* lokale Firmennetzwerke
-* interne IT-Prüfungen
+- kleine Unternehmen
+- Handwerksbetriebe
+- Arztpraxen
+- Kanzleien
+- lokale Firmennetzwerke
+- interne IT-Prüfungen
 
 Der Bericht ersetzt keine vollständige professionelle Sicherheitsanalyse, kann aber helfen, offensichtliche Risiken frühzeitig zu erkennen.
 
@@ -108,9 +120,13 @@ Der Bericht ersetzt keine vollständige professionelle Sicherheitsanalyse, kann 
 
 Geplante oder mögliche Erweiterungen:
 
-* PDF-Bericht
-* optionaler Ergebnisexport
-* bessere Geräteerkennung
-* Code-Signing
-* Microsoft 365 Check als separates Modul
-* optionales Admin-Dashboard für Auswertungen
+- PDF-Bericht
+- optionaler Ergebnisexport
+- bessere Geräteerkennung über weitere Quellen
+- Code-Signing
+- Microsoft 365 Check als separates Modul
+- optionales Admin-Dashboard für Auswertungen
+
+## Lizenz
+
+Dieses Projekt steht unter der MIT License.
