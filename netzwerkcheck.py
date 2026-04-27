@@ -1,6 +1,6 @@
 """
 IT-Solutions Netzwerkcheck
-Version: 1.2.2
+Version: 1.2.3
 Autor: IT-Solutions / Lucas Biesenberger
 
 Zweck:
@@ -70,6 +70,25 @@ RISK_POINTS = {
 }
 
 
+def get_no_window_subprocess_kwargs() -> dict:
+    """
+    Verhindert sichtbare CMD-Fenster bei subprocess-Aufrufen unter Windows.
+    Besonders wichtig bei Ping- und ARP-Abfragen in einer --windowed EXE.
+    """
+    kwargs = {}
+
+    if platform.system().lower().startswith("win"):
+        startupinfo = subprocess.STARTUPINFO()
+        startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+        startupinfo.wShowWindow = 0
+
+        kwargs["startupinfo"] = startupinfo
+        kwargs["creationflags"] = subprocess.CREATE_NO_WINDOW
+
+    return kwargs
+
+
+
 @dataclass
 class PortResult:
     port: int
@@ -120,6 +139,7 @@ def ping_host(ip: str, timeout_seconds: float = 0.8) -> bool:
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,
             timeout=timeout_seconds + 0.5,
+            **get_no_window_subprocess_kwargs(),
         )
         return completed.returncode == 0
     except Exception:
@@ -159,6 +179,7 @@ def parse_arp_table() -> dict[str, str]:
             encoding="utf-8",
             errors="ignore",
             timeout=5,
+            **get_no_window_subprocess_kwargs(),
         )
         output = completed.stdout + "\n" + completed.stderr
 
@@ -327,7 +348,7 @@ def scan_network(
 
     return {
         "scanner": "IT-Solutions Netzwerkcheck",
-        "version": "1.2.2",
+        "version": "1.2.3",
         "network": str(network.with_prefixlen),
         "started_at": started.isoformat(timespec="seconds"),
         "finished_at": finished.isoformat(timespec="seconds"),

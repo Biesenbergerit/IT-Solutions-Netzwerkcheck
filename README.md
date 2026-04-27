@@ -6,7 +6,7 @@ Das Tool wurde von Lucas Biesenberger IT-Solutions entwickelt und dient als erst
 
 ## Was das Tool macht
 
-Die Version 1.2.2 enthält eine modernisierte Oberfläche im IT-Solutions Branding mit Dashboard, Ergebnisliste und Risikoübersicht.
+Die Version 1.2.3 enthält eine modernisierte Oberfläche im IT-Solutions Branding mit Dashboard, Ergebnisliste und Risikoübersicht.
 
 
 - erkennt aktiv erreichbare bzw. lokal sichtbare Geräte im Netzwerk

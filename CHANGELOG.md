@@ -1,3 +1,9 @@
+# Änderungen Version 1.2.3
+
+- Sichtbare CMD-Fenster bei Ping- und ARP-Abfragen unter Windows unterdrückt.
+- Subprocess-Aufrufe verwenden unter Windows `CREATE_NO_WINDOW`.
+- Der Scan sollte nun ohne aufploppende Konsolenfenster laufen.
+
 # Änderungen Version 1.2.2
 
 - Funktionslose Sidebar entfernt.
