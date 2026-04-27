@@ -1,6 +1,6 @@
 """
 IT-Solutions Netzwerkcheck
-Version: 1.2.1
+Version: 1.2.2
 Autor: IT-Solutions / Lucas Biesenberger
 
 Zweck:
@@ -327,7 +327,7 @@ def scan_network(
 
     return {
         "scanner": "IT-Solutions Netzwerkcheck",
-        "version": "1.2.1",
+        "version": "1.2.2",
         "network": str(network.with_prefixlen),
         "started_at": started.isoformat(timespec="seconds"),
         "finished_at": finished.isoformat(timespec="seconds"),
@@ -633,12 +633,13 @@ def render_html_report(report: dict) -> str:
 
 
 
+
 class NetworkCheckApp:
     def __init__(self, root: tk.Tk):
         self.root = root
         self.root.title("IT-Solutions Netzwerkcheck")
-        self.root.geometry("1180x760")
-        self.root.minsize(1080, 700)
+        self.root.geometry("1040x680")
+        self.root.minsize(980, 640)
         self.root.configure(bg="#f5f7fb")
 
         self.is_scanning = False
@@ -680,31 +681,39 @@ class NetworkCheckApp:
         except Exception:
             pass
 
-        style.configure("Purple.Horizontal.TProgressbar",
-                        troughcolor="#e5e7eb",
-                        background=self.colors["purple"],
-                        bordercolor="#e5e7eb",
-                        lightcolor=self.colors["purple"],
-                        darkcolor=self.colors["purple"])
+        style.configure(
+            "Purple.Horizontal.TProgressbar",
+            troughcolor="#e5e7eb",
+            background=self.colors["purple"],
+            bordercolor="#e5e7eb",
+            lightcolor=self.colors["purple"],
+            darkcolor=self.colors["purple"],
+        )
 
-        style.configure("Modern.Treeview",
-                        background="#ffffff",
-                        foreground=self.colors["text"],
-                        rowheight=34,
-                        fieldbackground="#ffffff",
-                        bordercolor=self.colors["border"],
-                        borderwidth=0,
-                        font=("Segoe UI", 10))
-        style.configure("Modern.Treeview.Heading",
-                        background="#f8fafc",
-                        foreground=self.colors["text"],
-                        font=("Segoe UI", 10, "bold"),
-                        relief="flat")
-        style.map("Modern.Treeview",
-                  background=[("selected", "#efeaff")],
-                  foreground=[("selected", self.colors["text"])])
+        style.configure(
+            "Modern.Treeview",
+            background="#ffffff",
+            foreground=self.colors["text"],
+            rowheight=30,
+            fieldbackground="#ffffff",
+            bordercolor=self.colors["border"],
+            borderwidth=0,
+            font=("Segoe UI", 9),
+        )
+        style.configure(
+            "Modern.Treeview.Heading",
+            background="#f8fafc",
+            foreground=self.colors["text"],
+            font=("Segoe UI", 9, "bold"),
+            relief="flat",
+        )
+        style.map(
+            "Modern.Treeview",
+            background=[("selected", "#efeaff")],
+            foreground=[("selected", self.colors["text"])],
+        )
 
-    def _load_logo(self, max_px: int = 72):
+    def _load_logo(self, max_px: int = 58):
         if not LOGO_PNG_BASE64.strip():
             return None
         try:
@@ -716,13 +725,6 @@ class NetworkCheckApp:
             return img
         except Exception:
             return None
-
-    def _card(self, parent, bg=None, padx=18, pady=16, **grid):
-        bg = bg or self.colors["surface"]
-        frame = tk.Frame(parent, bg=bg, highlightbackground=self.colors["border"], highlightthickness=1)
-        frame.grid(**grid)
-        frame.grid_propagate(True)
-        return frame
 
     def _make_button(self, parent, text, command=None, primary=False, width=None):
         bg = self.colors["purple"] if primary else self.colors["surface"]
@@ -738,9 +740,9 @@ class NetworkCheckApp:
             activeforeground=fg,
             relief="flat",
             bd=0,
-            padx=18,
-            pady=12,
-            font=("Segoe UI", 10, "bold"),
+            padx=12,
+            pady=8,
+            font=("Segoe UI", 9, "bold"),
             cursor="hand2",
             width=width or 0,
             highlightthickness=1,
@@ -749,72 +751,72 @@ class NetworkCheckApp:
         return btn
 
     def _build_ui(self):
-        self.root.grid_columnconfigure(1, weight=1)
+        self.root.grid_columnconfigure(0, weight=1)
         self.root.grid_rowconfigure(1, weight=1)
 
         self._build_header()
-        self._build_sidebar()
         self._build_main()
 
     def _build_header(self):
-        header = tk.Frame(self.root, bg=self.colors["surface"], height=92, highlightbackground=self.colors["border"], highlightthickness=1)
-        header.grid(row=0, column=0, columnspan=2, sticky="ew")
+        header = tk.Frame(
+            self.root,
+            bg=self.colors["surface"],
+            height=78,
+            highlightbackground=self.colors["border"],
+            highlightthickness=1,
+        )
+        header.grid(row=0, column=0, sticky="ew")
         header.grid_columnconfigure(1, weight=1)
+        header.grid_propagate(False)
 
-        self.logo_img = self._load_logo(70)
+        self.logo_img = self._load_logo(58)
         if self.logo_img:
             logo = tk.Label(header, image=self.logo_img, bg=self.colors["surface"])
-            logo.grid(row=0, column=0, padx=(28, 18), pady=14, sticky="w")
+            logo.grid(row=0, column=0, padx=(22, 14), pady=10, sticky="w")
         else:
-            logo = tk.Label(header, text="iB", bg=self.colors["surface"], fg=self.colors["text"], font=("Segoe UI", 24, "bold"))
-            logo.grid(row=0, column=0, padx=(28, 18), pady=14, sticky="w")
+            logo = tk.Label(
+                header,
+                text="iB",
+                bg=self.colors["surface"],
+                fg=self.colors["text"],
+                font=("Segoe UI", 22, "bold"),
+            )
+            logo.grid(row=0, column=0, padx=(22, 14), pady=10, sticky="w")
 
         title_box = tk.Frame(header, bg=self.colors["surface"])
-        title_box.grid(row=0, column=1, sticky="w", pady=14)
-        tk.Label(title_box, text="IT-Solutions Netzwerkcheck", bg=self.colors["surface"], fg=self.colors["text"],
-                 font=("Segoe UI", 20, "bold")).pack(anchor="w")
-        tk.Label(title_box, text="Lokaler Sicherheitscheck für berechtigte Netzwerke", bg=self.colors["surface"],
-                 fg=self.colors["muted"], font=("Segoe UI", 10)).pack(anchor="w", pady=(3, 0))
+        title_box.grid(row=0, column=1, sticky="w", pady=10)
+        tk.Label(
+            title_box,
+            text="IT-Solutions Netzwerkcheck",
+            bg=self.colors["surface"],
+            fg=self.colors["text"],
+            font=("Segoe UI", 18, "bold"),
+        ).pack(anchor="w")
+        tk.Label(
+            title_box,
+            text="Lokaler Sicherheitscheck für berechtigte Netzwerke",
+            bg=self.colors["surface"],
+            fg=self.colors["muted"],
+            font=("Segoe UI", 9),
+        ).pack(anchor="w", pady=(1, 0))
 
-        status = tk.Label(header, text="  🛡  Lokaler Sicherheitscheck  ●  ", bg="#f8f5ff", fg=self.colors["purple"],
-                          font=("Segoe UI", 10, "bold"), padx=12, pady=8)
-        status.grid(row=0, column=2, padx=(0, 34), pady=20, sticky="e")
-
-    def _build_sidebar(self):
-        sidebar = tk.Frame(self.root, bg=self.colors["surface"], width=190, highlightbackground=self.colors["border"], highlightthickness=1)
-        sidebar.grid(row=1, column=0, sticky="ns")
-        sidebar.grid_propagate(False)
-
-        items = [
-            ("⌕", "Scan", True),
-            ("▱", "Geräte", False),
-            ("◇", "Risiken", False),
-            ("▤", "Bericht", False),
-            ("⚙", "Einstellungen", False),
-        ]
-
-        for i, (icon, label, active) in enumerate(items):
-            bg = self.colors["purple"] if active else self.colors["surface"]
-            fg = "#ffffff" if active else "#334155"
-            item = tk.Frame(sidebar, bg=bg, height=46)
-            item.pack(fill="x", padx=22, pady=(26 if i == 0 else 6, 0))
-            item.pack_propagate(False)
-            tk.Label(item, text=icon, bg=bg, fg=fg, font=("Segoe UI", 15)).pack(side="left", padx=(12, 10))
-            tk.Label(item, text=label, bg=bg, fg=fg, font=("Segoe UI", 10, "bold" if active else "normal")).pack(side="left")
-
-        bottom = tk.Frame(sidebar, bg="#ffffff", highlightbackground=self.colors["border"], highlightthickness=1)
-        bottom.pack(side="bottom", fill="x", padx=22, pady=24)
-        tk.Label(bottom, text="🛡", bg="#ffffff", fg=self.colors["purple"], font=("Segoe UI", 18)).pack(anchor="w", padx=12, pady=(12, 0))
-        tk.Label(bottom, text="Systemstatus", bg="#ffffff", fg=self.colors["muted"], font=("Segoe UI", 8)).pack(anchor="w", padx=12)
-        tk.Label(bottom, text="● Alles in Ordnung", bg="#ffffff", fg=self.colors["green"], font=("Segoe UI", 9, "bold")).pack(anchor="w", padx=12, pady=(2, 0))
-        tk.Label(bottom, text="Letzter Scan: Heute", bg="#ffffff", fg=self.colors["muted"], font=("Segoe UI", 8)).pack(anchor="w", padx=12, pady=(8, 12))
+        status = tk.Label(
+            header,
+            text="  🛡  Lokaler Sicherheitscheck  ●  ",
+            bg="#f8f5ff",
+            fg=self.colors["purple"],
+            font=("Segoe UI", 9, "bold"),
+            padx=10,
+            pady=7,
+        )
+        status.grid(row=0, column=2, padx=(0, 24), pady=16, sticky="e")
 
     def _build_main(self):
         main = tk.Frame(self.root, bg=self.colors["bg"])
-        main.grid(row=1, column=1, sticky="nsew", padx=22, pady=18)
+        main.grid(row=1, column=0, sticky="nsew", padx=16, pady=12)
         main.grid_columnconfigure(0, weight=1)
-        main.grid_columnconfigure(1, minsize=300)
-        main.grid_rowconfigure(3, weight=1)
+        main.grid_columnconfigure(1, minsize=290)
+        main.grid_rowconfigure(2, weight=1)
 
         self._build_scan_card(main)
         self._build_metrics(main)
@@ -822,144 +824,304 @@ class NetworkCheckApp:
         self._build_footer_actions(main)
 
     def _build_scan_card(self, parent):
-        card = tk.Frame(parent, bg=self.colors["surface"], highlightbackground="#d8ccff", highlightthickness=1)
-        card.grid(row=0, column=0, columnspan=2, sticky="ew", pady=(0, 14))
+        card = tk.Frame(
+            parent,
+            bg=self.colors["surface"],
+            highlightbackground="#d8ccff",
+            highlightthickness=1,
+        )
+        card.grid(row=0, column=0, columnspan=2, sticky="ew", pady=(0, 10))
         card.grid_columnconfigure(1, weight=1)
         card.grid_columnconfigure(2, weight=1)
 
-        icon = tk.Label(card, text="⌁", bg=self.colors["purple"], fg="#ffffff", font=("Segoe UI", 28, "bold"), width=3, height=1)
-        icon.grid(row=0, column=0, rowspan=2, padx=22, pady=18)
+        icon = tk.Label(
+            card,
+            text="⌁",
+            bg=self.colors["purple"],
+            fg="#ffffff",
+            font=("Segoe UI", 22, "bold"),
+            width=3,
+            height=1,
+        )
+        icon.grid(row=0, column=0, rowspan=2, padx=16, pady=14)
 
-        tk.Label(card, text="Lokalen Netzwerk-Sicherheitscheck starten", bg=self.colors["surface"], fg=self.colors["text"],
-                 font=("Segoe UI", 14, "bold")).grid(row=0, column=1, sticky="w", pady=(20, 2))
-        tk.Label(card, text="Überprüfen Sie Ihr lokales Netzwerk auf erreichbare Geräte\nund Standarddienste, um Sicherheitsrisiken zu identifizieren.",
-                 bg=self.colors["surface"], fg="#475569", font=("Segoe UI", 10), justify="left").grid(row=1, column=1, sticky="nw", pady=(0, 18))
+        tk.Label(
+            card,
+            text="Lokalen Netzwerk-Sicherheitscheck starten",
+            bg=self.colors["surface"],
+            fg=self.colors["text"],
+            font=("Segoe UI", 13, "bold"),
+        ).grid(row=0, column=1, sticky="w", pady=(16, 1))
+        tk.Label(
+            card,
+            text="Prüft aktiv sichtbare Geräte, ARP-Informationen und offene Standarddienste.",
+            bg=self.colors["surface"],
+            fg="#475569",
+            font=("Segoe UI", 9),
+            justify="left",
+        ).grid(row=1, column=1, sticky="nw", pady=(0, 14))
 
         controls = tk.Frame(card, bg=self.colors["surface"])
-        controls.grid(row=0, column=2, rowspan=2, sticky="ew", padx=20, pady=18)
+        controls.grid(row=0, column=2, rowspan=2, sticky="ew", padx=16, pady=13)
         controls.grid_columnconfigure(0, weight=1)
-        tk.Label(controls, text="Netzwerkbereich (CIDR)", bg=self.colors["surface"], fg="#334155",
-                 font=("Segoe UI", 9)).grid(row=0, column=0, sticky="w")
+        tk.Label(
+            controls,
+            text="Netzwerkbereich (CIDR)",
+            bg=self.colors["surface"],
+            fg="#334155",
+            font=("Segoe UI", 8),
+        ).grid(row=0, column=0, sticky="w")
 
-        entry = tk.Entry(controls, textvariable=self.network_var, bg="#ffffff", fg=self.colors["text"],
-                         relief="solid", bd=1, font=("Segoe UI", 11), highlightthickness=1,
-                         highlightbackground=self.colors["border"])
-        entry.grid(row=1, column=0, sticky="ew", pady=(4, 8), ipady=8)
+        entry = tk.Entry(
+            controls,
+            textvariable=self.network_var,
+            bg="#ffffff",
+            fg=self.colors["text"],
+            relief="solid",
+            bd=1,
+            font=("Segoe UI", 10),
+            highlightthickness=1,
+            highlightbackground=self.colors["border"],
+        )
+        entry.grid(row=1, column=0, sticky="ew", pady=(2, 5), ipady=6)
 
-        cb = tk.Checkbutton(controls, text="Ich bestätige, dass ich berechtigt bin, dieses Netzwerk zu prüfen.",
-                            variable=self.consent_var, bg=self.colors["surface"], fg="#334155",
-                            activebackground=self.colors["surface"], selectcolor=self.colors["purple"],
-                            font=("Segoe UI", 9))
+        cb = tk.Checkbutton(
+            controls,
+            text="Ich bestätige die Berechtigung für dieses Netzwerk.",
+            variable=self.consent_var,
+            bg=self.colors["surface"],
+            fg="#334155",
+            activebackground=self.colors["surface"],
+            selectcolor=self.colors["purple"],
+            font=("Segoe UI", 8),
+        )
         cb.grid(row=2, column=0, sticky="w")
 
-        self.start_button = self._make_button(card, "▷  Netzwerk prüfen", command=self.start_scan, primary=True, width=18)
-        self.start_button.grid(row=0, column=3, rowspan=2, padx=(8, 22), pady=28, sticky="e")
+        self.start_button = self._make_button(
+            card,
+            "▷  Netzwerk prüfen",
+            command=self.start_scan,
+            primary=True,
+            width=18,
+        )
+        self.start_button.grid(row=0, column=3, rowspan=2, padx=(4, 16), pady=22, sticky="e")
 
         sep = tk.Frame(card, bg=self.colors["border"], height=1)
-        sep.grid(row=2, column=0, columnspan=4, sticky="ew", padx=22, pady=(2, 14))
+        sep.grid(row=2, column=0, columnspan=4, sticky="ew", padx=16, pady=(0, 10))
 
-        tk.Label(card, text="⌁", bg=self.colors["purple_soft"], fg=self.colors["purple"], font=("Segoe UI", 18, "bold"),
-                 width=3).grid(row=3, column=0, padx=22, pady=(0, 18), sticky="w")
-        self.progress_label = tk.Label(card, textvariable=self.status_var, bg=self.colors["surface"], fg=self.colors["text"],
-                                       font=("Segoe UI", 10, "bold"))
-        self.progress_label.grid(row=3, column=1, sticky="w", pady=(0, 18))
-        self.progress = ttk.Progressbar(card, variable=self.progress_var, maximum=100, mode="determinate",
-                                        style="Purple.Horizontal.TProgressbar")
-        self.progress.grid(row=3, column=2, columnspan=2, sticky="ew", padx=(10, 22), pady=(0, 18), ipady=3)
+        tk.Label(
+            card,
+            text="⌁",
+            bg=self.colors["purple_soft"],
+            fg=self.colors["purple"],
+            font=("Segoe UI", 15, "bold"),
+            width=3,
+        ).grid(row=3, column=0, padx=16, pady=(0, 12), sticky="w")
+        self.progress_label = tk.Label(
+            card,
+            textvariable=self.status_var,
+            bg=self.colors["surface"],
+            fg=self.colors["text"],
+            font=("Segoe UI", 9, "bold"),
+        )
+        self.progress_label.grid(row=3, column=1, sticky="w", pady=(0, 12))
+        self.progress = ttk.Progressbar(
+            card,
+            variable=self.progress_var,
+            maximum=100,
+            mode="determinate",
+            style="Purple.Horizontal.TProgressbar",
+        )
+        self.progress.grid(row=3, column=2, columnspan=2, sticky="ew", padx=(8, 16), pady=(0, 12), ipady=2)
 
     def _build_metrics(self, parent):
         metrics = tk.Frame(parent, bg=self.colors["bg"])
-        metrics.grid(row=1, column=0, sticky="ew", pady=(0, 14))
+        metrics.grid(row=1, column=0, sticky="ew", pady=(0, 10))
         for i in range(4):
             metrics.grid_columnconfigure(i, weight=1)
 
-        self.metric_devices = self._metric_card(metrics, 0, "▱", "Gefundene Geräte", "0", "Aktiv sichtbar", self.colors["purple"], self.colors["purple_soft"])
-        self.metric_ports = self._metric_card(metrics, 1, "▦", "Offene Dienste", "0", "Auf Geräten", "#2563eb", "#dbeafe")
-        self.metric_high = self._metric_card(metrics, 2, "!", "Kritische Risiken", "0", "Benötigen Aufmerksamkeit", self.colors["red"], self.colors["red_soft"])
-        self.metric_report = self._metric_card(metrics, 3, "▤", "Bericht", "Bereit", "HTML & JSON", self.colors["green"], self.colors["green_soft"])
+        self.metric_cards = {}
 
-    def _metric_card(self, parent, col, icon, title, value, sub, color, soft):
-        card = tk.Frame(parent, bg=self.colors["surface"], highlightbackground=self.colors["border"], highlightthickness=1)
-        card.grid(row=0, column=col, sticky="ew", padx=(0 if col == 0 else 8, 0), ipady=8)
-        tk.Label(card, text=icon, bg=soft, fg=color, font=("Segoe UI", 18, "bold"), width=3).pack(side="left", padx=16, pady=16)
-        box = tk.Frame(card, bg=self.colors["surface"])
-        box.pack(side="left", fill="both", expand=True, pady=12)
-        tk.Label(box, text=title, bg=self.colors["surface"], fg="#475569", font=("Segoe UI", 9)).pack(anchor="w")
-        val_label = tk.Label(box, text=value, bg=self.colors["surface"], fg=self.colors["text"], font=("Segoe UI", 18, "bold"))
-        val_label.pack(anchor="w")
-        tk.Label(box, text=sub, bg=self.colors["surface"], fg=self.colors["muted"], font=("Segoe UI", 8)).pack(anchor="w")
+        self.metric_devices = self._metric_card(
+            metrics,
+            0,
+            "▱",
+            "Gefundene Geräte",
+            "0",
+            "Liste anzeigen",
+            self.colors["purple"],
+            self.colors["purple_soft"],
+            command=self.focus_devices,
+            key="devices",
+        )
+        self.metric_ports = self._metric_card(
+            metrics,
+            1,
+            "▦",
+            "Offene Dienste",
+            "0",
+            "Risiken anzeigen",
+            "#2563eb",
+            "#dbeafe",
+            command=self.focus_risks,
+            key="ports",
+        )
+        self.metric_high = self._metric_card(
+            metrics,
+            2,
+            "!",
+            "Kritische Risiken",
+            "0",
+            "Risiken anzeigen",
+            self.colors["red"],
+            self.colors["red_soft"],
+            command=self.focus_risks,
+            key="high",
+        )
+        self.metric_report = self._metric_card(
+            metrics,
+            3,
+            "▤",
+            "Bericht",
+            "-",
+            "Bericht öffnen",
+            self.colors["green"],
+            self.colors["green_soft"],
+            command=self.open_last_html,
+            key="report",
+        )
+
+    def _metric_card(self, parent, col, icon, title, value, sub, color, soft, command=None, key=None):
+        card = tk.Frame(
+            parent,
+            bg=self.colors["surface"],
+            highlightbackground=self.colors["border"],
+            highlightthickness=1,
+            cursor="hand2" if command else "",
+        )
+        card.grid(row=0, column=col, sticky="ew", padx=(0 if col == 0 else 8, 0), ipady=4)
+        card.grid_columnconfigure(1, weight=1)
+
+        icon_label = tk.Label(card, text=icon, bg=soft, fg=color, font=("Segoe UI", 15, "bold"), width=3)
+        icon_label.grid(row=0, column=0, rowspan=3, padx=12, pady=12, sticky="w")
+        tk.Label(card, text=title, bg=self.colors["surface"], fg="#475569", font=("Segoe UI", 8)).grid(row=0, column=1, sticky="w", pady=(10, 0))
+        val_label = tk.Label(card, text=value, bg=self.colors["surface"], fg=self.colors["text"], font=("Segoe UI", 16, "bold"))
+        val_label.grid(row=1, column=1, sticky="w")
+        tk.Label(card, text=sub, bg=self.colors["surface"], fg=self.colors["muted"], font=("Segoe UI", 8)).grid(row=2, column=1, sticky="w", pady=(0, 8))
+
+        if command:
+            for widget in (card, icon_label, val_label):
+                widget.bind("<Button-1>", lambda _e, cmd=command: cmd())
+            card.bind("<Enter>", lambda _e, c=card: c.configure(highlightbackground=self.colors["purple"]))
+            card.bind("<Leave>", lambda _e, c=card: c.configure(highlightbackground=self.colors["border"]))
+
+        if key:
+            self.metric_cards[key] = card
+
         return val_label
 
     def _build_table_and_risks(self, parent):
         table_card = tk.Frame(parent, bg=self.colors["surface"], highlightbackground=self.colors["border"], highlightthickness=1)
-        table_card.grid(row=2, column=0, rowspan=2, sticky="nsew", pady=(0, 14), padx=(0, 14))
+        table_card.grid(row=2, column=0, sticky="nsew", pady=(0, 10), padx=(0, 10))
         table_card.grid_rowconfigure(1, weight=1)
         table_card.grid_columnconfigure(0, weight=1)
 
-        tk.Label(table_card, text="Gefundene Geräte & Dienste", bg=self.colors["surface"], fg=self.colors["text"],
-                 font=("Segoe UI", 12, "bold")).grid(row=0, column=0, sticky="w", padx=16, pady=(14, 8))
+        self.devices_title = tk.Label(
+            table_card,
+            text="Gefundene Geräte & Dienste",
+            bg=self.colors["surface"],
+            fg=self.colors["text"],
+            font=("Segoe UI", 11, "bold"),
+        )
+        self.devices_title.grid(row=0, column=0, sticky="w", padx=14, pady=(12, 6))
 
         columns = ("ip", "device", "ports", "risk", "status")
-        self.tree = ttk.Treeview(table_card, columns=columns, show="headings", style="Modern.Treeview", height=10)
+        self.tree = ttk.Treeview(table_card, columns=columns, show="headings", style="Modern.Treeview", height=9)
         self.tree.heading("ip", text="IP-Adresse")
         self.tree.heading("device", text="Gerät")
         self.tree.heading("ports", text="Dienste")
         self.tree.heading("risk", text="Risiko")
         self.tree.heading("status", text="Status")
-        self.tree.column("ip", width=120, anchor="w")
-        self.tree.column("device", width=190, anchor="w")
-        self.tree.column("ports", width=260, anchor="w")
-        self.tree.column("risk", width=90, anchor="center")
-        self.tree.column("status", width=110, anchor="center")
-        self.tree.grid(row=1, column=0, sticky="nsew", padx=16, pady=(0, 12))
+        self.tree.column("ip", width=115, anchor="w")
+        self.tree.column("device", width=180, anchor="w")
+        self.tree.column("ports", width=240, anchor="w")
+        self.tree.column("risk", width=75, anchor="center")
+        self.tree.column("status", width=95, anchor="center")
+        self.tree.grid(row=1, column=0, sticky="nsew", padx=14, pady=(0, 8))
 
-        self.tree.insert("", "end", values=("192.168.178.1", "FRITZ!Box", "53, 80, 443", "mittel", "Beispiel"))
-        self.tree.insert("", "end", values=("192.168.178.42", "Windows-PC", "135, 445, 3389", "hoch", "Beispiel"))
-        self.tree.insert("", "end", values=("192.168.178.24", "Drucker", "80, 443", "niedrig", "Beispiel"))
+        self.empty_label = tk.Label(
+            table_card,
+            text="Noch kein Scan durchgeführt. Starten Sie den Netzwerkcheck, um Geräte und Dienste anzuzeigen.",
+            bg=self.colors["surface"],
+            fg=self.colors["muted"],
+            font=("Segoe UI", 10),
+            justify="center",
+        )
+        self.empty_label.grid(row=1, column=0, sticky="nsew", padx=14, pady=(0, 8))
+        self.tree.grid_remove()
 
         risk_card = tk.Frame(parent, bg=self.colors["surface"], highlightbackground=self.colors["border"], highlightthickness=1)
-        risk_card.grid(row=2, column=1, sticky="nsew", pady=(0, 14))
+        risk_card.grid(row=2, column=1, sticky="nsew", pady=(0, 10))
         risk_card.grid_columnconfigure(0, weight=1)
+        risk_card.grid_rowconfigure(1, weight=1)
 
-        tk.Label(risk_card, text="Risikoübersicht", bg=self.colors["surface"], fg=self.colors["text"],
-                 font=("Segoe UI", 12, "bold")).grid(row=0, column=0, sticky="w", padx=16, pady=(14, 8))
+        self.risk_title = tk.Label(
+            risk_card,
+            text="Risikoübersicht",
+            bg=self.colors["surface"],
+            fg=self.colors["text"],
+            font=("Segoe UI", 11, "bold"),
+        )
+        self.risk_title.grid(row=0, column=0, sticky="w", padx=14, pady=(12, 6))
 
         self.risk_list = tk.Frame(risk_card, bg=self.colors["surface"])
-        self.risk_list.grid(row=1, column=0, sticky="nsew", padx=16, pady=(0, 14))
+        self.risk_list.grid(row=1, column=0, sticky="nsew", padx=14, pady=(0, 8))
 
-        self._risk_item("HTTPS-Weboberfläche verfügbar", "Weboberflächen sollten aktuell und geschützt sein.", "hoch")
-        self._risk_item("SMB-Dateifreigabe aktiv", "Freigaben, Rechte und Updates regelmäßig prüfen.", "mittel")
-        self._risk_item("RDP-Dienst erreichbar", "Zugriff beschränken und starke Authentifizierung nutzen.", "mittel")
-        self._risk_item("FTP-Dienst erkannt", "Falls nicht benötigt deaktivieren oder verschlüsselte Alternative nutzen.", "hoch")
+        self.risk_empty = tk.Label(
+            self.risk_list,
+            text="Noch keine Risiken gefunden.\nNach dem Scan erscheinen hier die wichtigsten Hinweise.",
+            bg=self.colors["surface"],
+            fg=self.colors["muted"],
+            font=("Segoe UI", 9),
+            justify="left",
+            wraplength=250,
+        )
+        self.risk_empty.pack(anchor="w", pady=6)
 
     def _risk_item(self, title, description, risk):
         color = {"hoch": self.colors["red"], "mittel": self.colors["amber"], "niedrig": self.colors["green"]}.get(risk, self.colors["muted"])
         soft = {"hoch": self.colors["red_soft"], "mittel": self.colors["amber_soft"], "niedrig": self.colors["green_soft"]}.get(risk, "#f1f5f9")
         row = tk.Frame(self.risk_list, bg=self.colors["surface"])
-        row.pack(fill="x", pady=(0, 12))
-        tk.Label(row, text="●", bg=self.colors["surface"], fg=color, font=("Segoe UI", 10)).pack(side="left", anchor="n", padx=(0, 8))
+        row.pack(fill="x", pady=(0, 9))
+        tk.Label(row, text="●", bg=self.colors["surface"], fg=color, font=("Segoe UI", 9)).pack(side="left", anchor="n", padx=(0, 6))
         txt = tk.Frame(row, bg=self.colors["surface"])
         txt.pack(side="left", fill="x", expand=True)
         top = tk.Frame(txt, bg=self.colors["surface"])
         top.pack(fill="x")
-        tk.Label(top, text=title, bg=self.colors["surface"], fg=self.colors["text"], font=("Segoe UI", 9, "bold")).pack(side="left", anchor="w")
-        tk.Label(top, text=risk, bg=soft, fg=color, font=("Segoe UI", 8, "bold"), padx=7, pady=2).pack(side="right")
-        tk.Label(txt, text=description, bg=self.colors["surface"], fg=self.colors["muted"], font=("Segoe UI", 8), wraplength=245, justify="left").pack(anchor="w", pady=(2, 0))
+        tk.Label(top, text=title, bg=self.colors["surface"], fg=self.colors["text"], font=("Segoe UI", 8, "bold")).pack(side="left", anchor="w")
+        tk.Label(top, text=risk, bg=soft, fg=color, font=("Segoe UI", 7, "bold"), padx=6, pady=1).pack(side="right")
+        tk.Label(txt, text=description, bg=self.colors["surface"], fg=self.colors["muted"], font=("Segoe UI", 8), wraplength=250, justify="left").pack(anchor="w", pady=(1, 0))
 
     def _build_footer_actions(self, parent):
         footer = tk.Frame(parent, bg=self.colors["bg"])
-        footer.grid(row=4, column=0, columnspan=2, sticky="ew")
+        footer.grid(row=3, column=0, columnspan=2, sticky="ew")
         footer.grid_columnconfigure(0, weight=1)
 
-        note = tk.Label(footer, text="🛡  Keine Angriffe, keine Passworttests, keine Änderungen an Systemen.",
-                        bg=self.colors["purple_soft"], fg=self.colors["purple"], font=("Segoe UI", 9, "bold"),
-                        padx=16, pady=10)
+        note = tk.Label(
+            footer,
+            text="🛡  Keine Angriffe, keine Passworttests, keine Änderungen an Systemen.",
+            bg=self.colors["purple_soft"],
+            fg=self.colors["purple"],
+            font=("Segoe UI", 8, "bold"),
+            padx=12,
+            pady=8,
+        )
         note.grid(row=0, column=0, sticky="w")
 
         self.html_button = self._make_button(footer, "🌐  HTML-Bericht öffnen", command=self.open_last_html, primary=False, width=20)
-        self.html_button.grid(row=0, column=1, padx=(12, 8), sticky="e")
-        self.json_button = self._make_button(footer, "</>  JSON exportieren", command=self.open_output_dir, primary=False, width=18)
-        self.json_button.grid(row=0, column=2, sticky="e")
+        self.html_button.grid(row=0, column=1, padx=(10, 8), sticky="e")
+        self.folder_button = self._make_button(footer, "📁  Ausgabeordner", command=self.open_output_dir, primary=False, width=16)
+        self.folder_button.grid(row=0, column=2, sticky="e")
 
     def _update_metrics_and_tables(self, report: dict):
         summary = report.get("summary", {})
@@ -983,11 +1145,19 @@ class NetworkCheckApp:
                 return "niedrig"
             return "-"
 
-        for host in results[:25]:
+        if results:
+            self.empty_label.grid_remove()
+            self.tree.grid()
+        else:
+            self.tree.grid_remove()
+            self.empty_label.configure(text="Keine aktiv sichtbaren Geräte gefunden.")
+            self.empty_label.grid()
+
+        for host in results[:30]:
             ports = host.get("open_ports", [])
             port_text = ", ".join(f"{p.get('port')} {p.get('service')}" for p in ports[:3]) if ports else "Keine offenen Standardports"
-            if len(port_text) > 42:
-                port_text = port_text[:39] + "..."
+            if len(port_text) > 46:
+                port_text = port_text[:43] + "..."
             self.tree.insert("", "end", values=(
                 host.get("ip", "-"),
                 host.get("hostname") or host.get("mac_address") or "-",
@@ -1013,8 +1183,15 @@ class NetworkCheckApp:
             for service, rec, risk, ip in findings[:6]:
                 self._risk_item(f"{service} auf {ip}", rec, risk)
 
+    def focus_devices(self):
+        self.devices_title.configure(fg=self.colors["purple"])
+        self.root.after(900, lambda: self.devices_title.configure(fg=self.colors["text"]))
+
+    def focus_risks(self):
+        self.risk_title.configure(fg=self.colors["purple"])
+        self.root.after(900, lambda: self.risk_title.configure(fg=self.colors["text"]))
+
     def log(self, message: str):
-        # Modern UI intentionally uses status label instead of raw log window.
         self.status_var.set(message)
 
     def autodetect(self):
@@ -1073,6 +1250,30 @@ class NetworkCheckApp:
             messagebox.showerror("Ungültiges Netzwerk", "Bitte geben Sie einen gültigen CIDR-Bereich an, z. B. 192.168.178.0/24.")
             return
 
+        # Vor Scan leeren, damit keine alten oder Beispielwerte sichtbar bleiben.
+        for item in self.tree.get_children():
+            self.tree.delete(item)
+        self.tree.grid_remove()
+        self.empty_label.configure(text="Scan läuft. Geräte und Dienste werden ermittelt...")
+        self.empty_label.grid()
+
+        for child in self.risk_list.winfo_children():
+            child.destroy()
+        tk.Label(
+            self.risk_list,
+            text="Scan läuft. Risiken werden nach Abschluss angezeigt.",
+            bg=self.colors["surface"],
+            fg=self.colors["muted"],
+            font=("Segoe UI", 9),
+            justify="left",
+            wraplength=250,
+        ).pack(anchor="w", pady=6)
+
+        self.metric_devices.configure(text="0")
+        self.metric_ports.configure(text="0")
+        self.metric_high.configure(text="0")
+        self.metric_report.configure(text="-")
+
         self.is_scanning = True
         self.start_button.configure(state="disabled", text="Scan läuft...")
         self.progress_var.set(0)
@@ -1103,7 +1304,7 @@ class NetworkCheckApp:
                 )
                 messagebox.showinfo(
                     "Scan abgeschlossen",
-                    f"Bericht erstellt:\n\n{html_path}"
+                    f"Bericht erstellt:\\n\\n{html_path}"
                 )
         except Exception as exc:
             def finish():

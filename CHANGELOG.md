@@ -1,3 +1,16 @@
+# Änderungen Version 1.2.2
+
+- Funktionslose Sidebar entfernt.
+- Oberfläche kompakter und aufgeräumter gestaltet.
+- Ergebnisliste zeigt vor dem ersten Scan keine Beispielwerte mehr.
+- Während des Scans werden alte Werte geleert.
+- KPI-Karten sind klickbar:
+  - Gefundene Geräte springt zur Geräteliste.
+  - Offene Dienste und kritische Risiken springen zur Risikoübersicht.
+  - Bericht öffnet den letzten HTML-Bericht.
+- Footer-Button für den Ausgabeordner ergänzt.
+- Fenstergröße reduziert und Abstände verbessert.
+
 # Änderungen Version 1.2.1
 
 - Syntaxfehler in der modernen Oberfläche behoben.
